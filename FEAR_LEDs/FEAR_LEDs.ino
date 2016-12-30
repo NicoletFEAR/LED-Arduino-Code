@@ -23,11 +23,11 @@ void loop() {
   bit1 = digitalRead(2);
   bit2 = digitalRead(3);
   bit3 = digitalRead(4);
-  String bitTotal = "" + bit1 + bit2 + bit3;
-  if(bitTotal.equals("000")){
+  //String bitTotal = "" + bit1 + bit2 + bit3;
+  if(bit1 == 0 && bit2 == 0 && bit3 == 0){
     //run disabled code
   }
-  if(bitTotal.equals("001")){
+  if(bit1 == 0 && bit2 == 0 && bit3 == 0){
     //run test code
   }
   //etc.
