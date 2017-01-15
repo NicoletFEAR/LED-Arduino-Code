@@ -1,34 +1,35 @@
-int bit1;
-int bit2;
-int bit3;
-//000 for disabled
-//001 for test mode
-//010,011,100 for auto
-//101,110,111 for teleop
-void setup() {
-  // put your setup code here, to run once:
-  //use pins 2,3,4 for input and 5-13 for LED strips
-  //nothing done for output yet
-  bit1 = 0;
-  bit2 = 0;
-  bit3 = 0;
-  pinMode(2,INPUT);
-  pinMode(3,INPUT);
-  pinMode(4,INPUT);
-  
+#include <Wire.h>
+
+void setup()
+{
+  pinMode (13, OUTPUT);
+  Wire.begin(4);                // join i2c bus with address #4
+  Wire.onReceive(receiveEvent); // register event
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  bit1 = digitalRead(2);
-  bit2 = digitalRead(3);
-  bit3 = digitalRead(4);
-  //String bitTotal = "" + bit1 + bit2 + bit3;
-  if(bit1 == 0 && bit2 == 0 && bit3 == 0){
-    //run disabled code
+void loop()
+{
+  delay(100);
+}
+
+// function that executes whenever data is received from master
+// this function is registered as an event, see setup()
+void receiveEvent(int howMany)
+{
+  String LED = "";
+
+  while ( Wire.available() > 0 )
+  {
+    char n=(char)Wire.read();
+    if(((int)n)>((int)(' ')))
+   LED += n;
   }
-  if(bit1 == 0 && bit2 == 0 && bit3 == 0){
-    //run test code
+
+  if (LED == "go")
+  {
+
+    digitalWrite (13, HIGH);
+
+
   }
-  //etc.
 }
